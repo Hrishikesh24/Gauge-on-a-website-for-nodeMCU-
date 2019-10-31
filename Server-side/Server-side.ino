@@ -7,24 +7,35 @@ For A revelotionary dustbin concept
 #include <ESP8266WebServer.h>
  
 // Replace with your network credentials
-const char* ssid = "<ssid>";
-const char* password = "<psk>";
-int dept = 50; //enter the dept of the dustbin in cm
+const char* ssid = "Moto G (5S) Plus 3104";
+const char* password = "1201Himanshu@";
+int dept = 30; //enter the dept of the dustbin in cm
+int top_thres = 30; enter the full threshold for upper bin 
+
 
 ESP8266WebServer server(80);   //instantiate server at port 80 (http port)
 
 const int trigP = 2;  //D4 Or GPIO-2 of nodemcu
 const int echoP = 0;  //D3 Or GPIO-0 of nodemcu
-
+const int trigP1 = 14;  //D5 Or GPIO-14 of nodemcu
+const int echoP1 = 12;  //D6 Or GPIO-12 of nodemcu
+const int crusher = 13; //D7 or GPIO-13 of nodemcu
+ 
 long duration =0;
 int distance =0;
+long duration1 =0;
+int distance1 =0;
 
-String page = "";
-int data; 
+String page;
+float data;
+float datat; 
 void setup(void){
  
   pinMode(trigP, OUTPUT);
   pinMode(echoP, INPUT); 
+  pinMode(trigP1, OUTPUT);
+  pinMode(echoP1, INPUT); 
+  pinMode(crusher, OUTPUT); 
   
   delay(1000);
   Serial.begin(115200);
@@ -53,15 +64,25 @@ void setup(void){
 void loop(void){
 
   digitalWrite(trigP, LOW);   // Makes trigPin low
+  digitalWrite(trigP1, LOW);
   delayMicroseconds(2);       // 2 micro second delay 
-
   digitalWrite(trigP, HIGH);  // tigPin high
+  digitalWrite(trigP1, HIGH);
   delayMicroseconds(10);      // trigPin high for 10 micro seconds
   digitalWrite(trigP, LOW);   // trigPin low
-
+  digitalWrite(trigP1, LOW);
   duration = pulseIn(echoP, HIGH);   //Read echo pin, time in microseconds
-  distance= duration*0.034/2;        //Calculating actual/real distance
-  data = map(distance, 0, dept, 100, 0);
+  duration1 = pulseIn(echoP1, HIGH); 
+  distance= duration*0.0343/2;        //Calculating actual/real distance
+  distance1= duration1*0.0343/2;  
+  if(distance1 <= top_thres){
+    digitalWrite(crusher, HIGH);
+  }
+  else{
+    digitalWrite(crusher, LOW);
+  }
+  datat = map(distance, 2, dept, 30, 0);
+  data = (datat/30)*100;
   Serial.print("Distance = ");        //Output distance on arduino serial monitor 
   Serial.println(distance);
   delay(1000);
