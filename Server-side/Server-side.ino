@@ -7,8 +7,8 @@ For A revelotionary dustbin concept
 #include <ESP8266WebServer.h>
  
 // Replace with your network credentials
-const char* ssid = "Moto G (5S) Plus 3104";
-const char* password = "1201Himanshu@";
+const char* ssid = "Hedgewar ATL";
+const char* password = "Hedgewar212121";
 int dept = 30; //enter the dept of the dustbin in cm
 int top_thres = 30; enter the full threshold for upper bin 
 
