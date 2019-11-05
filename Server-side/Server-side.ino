@@ -7,10 +7,10 @@ For A revelotionary dustbin concept
 #include <ESP8266WebServer.h>
  
 // Replace with your network credentials
-const char* ssid = "Hedgewar ATL";
-const char* password = "Hedgewar212121";
-int dept = 30; //enter the dept of the dustbin in cm
-int top_thres = 30; enter the full threshold for upper bin 
+const char* ssid = "Test";
+const char* password = "Test";
+int dept = 10; //enter the dept of the dustbin in cm
+int top_thres = 9; //enter the full threshold for upper bin 
 
 
 ESP8266WebServer server(80);   //instantiate server at port 80 (http port)
@@ -85,6 +85,7 @@ void loop(void){
   data = (datat/30)*100;
   Serial.print("Distance = ");        //Output distance on arduino serial monitor 
   Serial.println(distance);
+  Serial.println(distance1);
   delay(1000);
   server.handleClient();
 }
